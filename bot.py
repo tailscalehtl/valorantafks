@@ -18,7 +18,9 @@ art_text = """
  /  /_\  \ |    __) |      <    ______ |    |  _/ /   |   \|    |   
 /    |    \|     \  |    |  \  /_____/ |    |   \/    |    \    |   
 \____|__  /\___  /  |____|__ \         |______  /\_______  /____|   
-        \/     \/           \/                \/         \/         
+        \/     \/           \/                \/         \/             V1.0
+
+Use this tool on your own risk. I dont think you'll get banned but i cant guarantee anything.
 """
 
 keybinds = """
