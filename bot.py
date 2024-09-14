@@ -190,10 +190,10 @@ def main():
                 return
             elif keyboard.is_pressed('u'):
                 if noannoy == 1:
-                    noannoy == 0
+                    noannoy = 0
                     print("Chat turned on.")
                 else:
-                    noannoy == 1
+                    noannoy = 1
                     print("Chat turned off.")
             elif keyboard.is_pressed('i'):
                 if queue == 1:
