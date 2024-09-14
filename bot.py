@@ -40,7 +40,7 @@ keybinds = """
 
 """
 
-
+queue=1
 
 explain = """
 Example:
@@ -165,17 +165,17 @@ res3y = math.ceil(0.6979167 * resy)
 
 def main():
     
-    print('\nTo end the program : hold Q for 3 sec')
-    print('Starting bot in 3 sec ')
-    print("")
-    print("Please start the queue for ranked manually.")
-    print("After the first game ends the bot will queue automatically again.")
+    print('\nHold the q-key for 3 sec to stop the program')
+    print("Hold the q-key for 3 sec to toggle the chat function")
+    print("Hold the q-key for 3 sec to disabl queuing again")
+    print('Starting bot in 5 sec ')
     print()
-    sleep(3)
+    sleep(5)
 
     # check if valorant is active than run
     try:
         focusOnValorant()
+        sleep(1)
         # came here means valo is active and chat_afk() function executed
         global bot_flag 
         bot_flag = True # will be used to terminate the bot / thread
@@ -188,6 +188,23 @@ def main():
             if keyboard.is_pressed('q'):
                 bot_flag = False
                 return
+            elif keyboard.is_pressed('u'):
+                if noannoy == 1:
+                    noannoy == 0
+                    print("Chat turned on.")
+                else:
+                    noannoy == 1
+                    print("Chat turned off.")
+            elif keyboard.is_pressed('i'):
+                if queue == 1:
+                    queue = 0
+                    print("Queueing again has been disabled!")
+                    print("Hold the i-key for 3 seconds to reenable")
+                else:
+                    queue = 1
+                    print("Queueing again has been reenabled")
+
+
         # end of try block        
     except:
         print()
@@ -207,6 +224,10 @@ def chat_afk():
         pyautogui.typewrite('Im going AFK , my bot is on! :)')
         sleep(0.5)
         keyboard.press_and_release('enter')
+    pyautogui.moveTo(res1x, res1y)
+    sleep(1)
+    pyautogui.click()
+    
 
 def no_afk():
     # print('hello world')
@@ -702,15 +723,17 @@ def no_afk():
         elif choice == 36:
             keyboard.press_and_release('f5')
             sleep(1)
-            pyautogui.moveTo(res1x, res1y)
-            sleep(1)
-            pyautogui.click()
+            if queue == 1:
+                pyautogui.moveTo(res1x, res1y)
+                sleep(1)
+                pyautogui.click()
         elif choice == 37:
             keyboard.press_and_release('f5')
             sleep(1)
-            pyautogui.moveTo(res1x, res1y)
-            sleep(1)
-            pyautogui.click()
+            if queue == 1:
+                pyautogui.moveTo(res1x, res1y)
+                sleep(1)
+                pyautogui.click()
         elif choice == 38:
             keyboard.press_and_release('f5')
             sleep(1)
