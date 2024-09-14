@@ -1,4 +1,4 @@
-# ValorantAfkBot
+# Valorant-Afk-Bot
 Simple Python bot that automatically queues for ranked, locks an agent and avoids afk detection.<br />
 Can also be used to bot accounts to level 20 in other modes.<br />
 
