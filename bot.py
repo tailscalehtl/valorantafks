@@ -167,6 +167,9 @@ def main():
     
     print('\nTo end the program : hold Q for 3 sec')
     print('Starting bot in 3 sec ')
+    print("")
+    print("Please start the queue for ranked manually.")
+    print("After the first game ends the bot will queue automatically again.")
     print()
     sleep(3)
 
