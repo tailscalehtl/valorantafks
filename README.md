@@ -15,7 +15,7 @@ In terminal type "pip install pyautogui"<br />
 In terminal type "pip install keyboard"<br />
 In terminal navigate to the folder where bot.py was placed.<br />
 In terminal type "python bot.py"<br />
-When starting the bot you have to start queuing manually. After the Match ends the bot will queue automatically.<br />
+Select gamemode in Valorant before starting the bot.<br />
 
 Keybinds needed:<br />
 Ability 3, Keybind: E<br />
