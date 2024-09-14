@@ -1,0 +1,748 @@
+from time import sleep
+import sys
+import keyboard 
+import random
+import pyautogui 
+import threading
+import math
+
+resx=2560
+resy=1440
+
+pyautogui.FAILSAFE = False
+
+
+art_text = """
+   _____  _______________  __.        __________ ___________________
+  /  _  \ \_   _____/    |/ _|        \______   \\_____  \__    ___/
+ /  /_\  \ |    __) |      <    ______ |    |  _/ /   |   \|    |   
+/    |    \|     \  |    |  \  /_____/ |    |   \/    |    \    |   
+\____|__  /\___  /  |____|__ \         |______  /\_______  /____|   
+        \/     \/           \/                \/         \/         
+"""
+
+keybinds = """
++------------------+---------+------------+
+|      Action      | Keybind | Importance |
++------------------+---------+------------+
+| Ability 3        | E       | needed     |
+| Fire             | J       | needed     |
+| Ultimate         | N       | optional   |
+| Alternate fire   | K       | optional   |
+| Primary weapon   | 1       | optional   |
+| Secondary Weapon | 2       | optional   |
+| Melee weapon     | 3       | optional   |
+| Inspect          | C       | optional   |
+| Spray            | Y       | optional   |
++------------------+---------+------------+
+
+"""
+
+
+
+explain = """
+Example:
++---------+--------+-----------+---------+
+|  1.Iso  | 2.Omen |  3.Neon   | 4.Jett  |
++---------+--------+-----------+---------+
+| 5.Reyna | 6.Raze | 7.Killjoy | 8.Clove | <-- Agent slot of Killjoy is 7 here
++---------+--------+-----------+---------+
+       
+"""
+
+
+print(art_text)
+print()
+print("You have to select the agent slot of Killjoy.")
+print("Killjoy is needed so you dont get detected as afk.")
+print("The Agent slot is on which position Killjoy is when selecting an Agent.")
+print(explain)
+print()
+
+user_input = input("Enter your Agent slot of Killjoy: ")
+
+# Convert the input to an integer
+try:
+    number = int(user_input)
+    print(f"Slot {number} selected")
+except ValueError:
+    print("That's not a valid integer.")
+    exit()
+print()
+
+print(f"Screen resolution is set to {resx}x{resy}")
+print("[INFO] Stretched maybe wont work as expected!")
+setres = input("Is this resolution correct? (Y/n): ").strip().lower()
+
+if setres == 'n':
+    # Prompt user for screen resolution
+    resolution = input("Enter your screen resolution (example: 1920x1080): ")
+
+    # Split the resolution into width and height
+    try:
+        width, height = resolution.split('x')
+        resx = int(width)
+        resy = int(height)
+        print(f"Set resolution to {resx}x{resy}")
+    except ValueError:
+        print("Invalid resolution format. Please enter it in the format 'width x height' (e.g., 1920x1080).")
+        exit()
+
+print()
+noannoy = input("Should the bot send some mildly annoying messages in ingame chat? (Y/n): ").strip().lower()
+noannoy = 1 if noannoy == 'n' else 0
+
+if noannoy == 1:
+    print("Chat turned off.")
+else:
+    print("Chat turned on.")
+
+print()
+print("Make sure to change your Keybinds to the following:")
+print(keybinds)
+input("Press any key to continue...")
+
+
+
+
+if number==1 or number==5 or number==9 or number==13 or number==17:
+    slotx = 1
+
+elif number==2 or number==6 or number==10 or number==14 or number==18:
+    slotx = 2
+    
+elif number==3 or number==7 or number==11 or number==15 or number==19:
+    slotx = 3
+
+elif number==4 or number==8 or number==12 or number==16 or number==20:
+    slotx = 4
+    
+if number == 1 or number == 2 or number == 3 or number == 4:
+    sloty = 1
+
+elif number == 5 or number == 6 or number == 7 or number == 8:
+    sloty = 2
+
+elif number == 9 or number == 10 or number == 11 or number == 12:
+    sloty = 3
+
+elif number == 13 or number == 14 or number == 15 or number == 16:
+    sloty = 4
+
+elif number == 17 or number == 18 or number == 19 or number == 20:
+    sloty = 5
+
+if sloty == 1:
+    ressloty=0.3222222
+elif sloty == 2:
+    ressloty=0.4230111
+elif sloty == 3:
+    ressloty=0.5100555
+elif sloty == 4:
+    ressloty=0.6059722
+elif sloty == 5:
+    ressloty=0.6888888
+    
+if slotx == 1:
+    resslotx=0.04375
+elif slotx == 2:
+    resslotx=0.09726563
+elif slotx == 3:
+    resslotx=0.14765625
+elif slotx == 4:
+    resslotx=0.19921875
+
+
+    
+res1x = math.ceil(0.4863281 * resx)
+res1y = math.ceil(0.9027777 * resy)
+res2x = math.ceil(resslotx * resx)
+res2y = math.ceil(ressloty * resy)
+res3x = math.ceil(0.4886719 * resx)
+res3y = math.ceil(0.6979167 * resy)
+
+def main():
+    
+    print('\nTo end the program : hold Q for 3 sec')
+    print('Starting bot in 3 sec ')
+    print()
+    sleep(3)
+
+    # check if valorant is active than run
+    try:
+        focusOnValorant()
+        # came here means valo is active and chat_afk() function executed
+        global bot_flag 
+        bot_flag = True # will be used to terminate the bot / thread
+        # creating thread  or  yes u can pass function XD
+        t1 = threading.Thread(target = no_afk ) 
+        # starting thread  or  calling no_afk in parallel
+        t1.start()
+        while bot_flag == True:
+            sleep(3)
+            if keyboard.is_pressed('q'):
+                bot_flag = False
+                return
+        # end of try block        
+    except:
+        print()
+        # thinking...
+
+    print('\n       THATS DONE!!    ')
+
+
+def focusOnValorant():
+            chat_afk()
+
+def chat_afk():
+    if noannoy == 0:
+        sleep(0.5)
+        keyboard.press_and_release('enter')
+        sleep(1)
+        pyautogui.typewrite('Im going AFK , my bot is on! :)')
+        sleep(0.5)
+        keyboard.press_and_release('enter')
+
+def no_afk():
+    # print('hello world')
+    sleep(0.5)
+    while bot_flag == True:
+        choice = random.randint(1,70) # 1 to 10
+        sleeptime = random.randint(2,10)
+        
+        #sed lyf no switch case :(
+        # W
+        if choice == 1:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('w')
+            sleep(sleeptime)
+            keyboard.release('w')
+        # A
+        elif choice == 2:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('a')
+            sleep(sleeptime)
+            keyboard.release('a')
+        # S
+        elif choice == 3:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('s')
+            sleep(sleeptime)
+            keyboard.release('s')
+        # D
+        elif choice == 4:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('d')
+            sleep(sleeptime)
+            keyboard.release('d')
+        # jump
+        elif choice == 5:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('space')
+            sleep(sleeptime)
+            keyboard.release('space')
+        # crouch
+        elif choice == 6:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('control')
+            sleep(sleeptime)
+            keyboard.release('control')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('k')
+
+        # lets have some fun 
+        # lOL    
+        elif choice == 7 and noannoy == 0: #lol
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            pyautogui.typewrite(' LOL :)')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            # sleep(sleeptime)
+        # afk 
+        elif choice == 8 and noannoy == 0: 
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            pyautogui.typewrite('Sorry boiz Im AFK')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(sleeptime)
+        # Im a bot
+        elif choice == 9 and noannoy == 0: 
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            pyautogui.typewrite('Sry im just a bot in this game dont blame me')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(sleeptime)
+        # buy
+        elif choice == 10: 
+            keyboard.press_and_release('f5')
+            sleep(1)
+            for _ in range(30):
+                keyboard.press_and_release('c')
+                sleep(0.1)
+        
+        elif choice == 11: 
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press_and_release('y')
+            
+        elif choice == 12 and noannoy == 0: 
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            pyautogui.typewrite('Im just a bot so i cant really play, enjoy the free win!')
+            sleep(1)
+            keyboard.press('shift')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            keyboard.release('shift')
+            sleep(1)
+            keyboard.press_and_release('enter')
+        elif choice == 13 and noannoy == 0: 
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            pyautogui.typewrite('Remember that im a free kill at spawn!')
+            sleep(1)
+            keyboard.press('shift')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            keyboard.release('shift')
+            sleep(1)
+            keyboard.press_and_release('enter')
+        elif choice == 14 and noannoy == 0: 
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            pyautogui.typewrite('/ff')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(3)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            pyautogui.typewrite('ff guys')
+            sleep(1)
+            keyboard.press_and_release('enter')
+
+        elif choice == 15: 
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press_and_release('e')
+            sleep(1)
+            keyboard.press_and_release('j')
+        elif choice == 16 and noannoy == 0: 
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            pyautogui.typewrite('ez')
+            sleep(1)
+            keyboard.press_and_release('enter')
+        elif choice == 17 and noannoy == 0: 
+            randomm = random.randint(1,15)
+            if randomm == 15:
+                keyboard.press_and_release('f5')
+                sleep(1)
+                keyboard.press_and_release('enter')
+                sleep(1)
+                pyautogui.typewrite('sry for being afk im back now')
+                sleep(1)
+                keyboard.press_and_release('enter')
+                sleep(10)
+                keyboard.press_and_release('enter')
+                sleep(1)
+                pyautogui.typewrite('jk im not coming back XD')
+                sleep(1)
+                keyboard.press_and_release('enter')
+                sleep(1)
+                keyboard.press_and_release('k')
+                sleep(1)
+                keyboard.press_and_release('k')
+        elif choice == 18:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('s')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.release('s')
+        elif choice == 19:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('w')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.release('w')
+        elif choice == 20:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('w')
+            sleep(1)
+            keyboard.press('a')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.release('w')
+            sleep(1)
+            keyboard.release('a')
+        elif choice == 21:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('w')
+            sleep(1)
+            keyboard.press('d')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.press_and_release('space')
+            sleep(1)
+            keyboard.release('w')
+            sleep(1)
+            keyboard.release('d')
+        elif choice == 22:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('w')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press('a')
+            sleep(10)
+            keyboard.release('a')
+            sleep(1)
+            keyboard.press('d')
+            sleep(5)
+            keyboard.release('d')
+            sleep(1)
+            keyboard.press('a')
+            sleep(5)
+            keyboard.release('a')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press('d')
+            sleep(5)
+            keyboard.release('d')
+            sleep(1)
+            keyboard.press('a')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(5)
+            keyboard.release('a')
+            sleep(1)
+            keyboard.press('d')
+            sleep(5)
+            keyboard.release('d')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press('a')
+        elif choice == 23 and noannoy == 0:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press_and_release('n')
+            sleep(1)
+            keyboard.press_and_release('j')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            pyautogui.typewrite('Atleast i can ult')
+            sleep(1)
+            keyboard.press('shift')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            keyboard.release('shift')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('k')
+            sleep(1)
+            keyboard.press_and_release('k')
+        elif choice == 24 and noannoy == 0:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            pyautogui.typewrite('Drop me an Odin please!!!')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(10)
+            keyboard.press_and_release('1')
+            sleep(1)
+            keyboard.press('j')
+            sleep(3)
+            keyboard.release('j')
+            sleep(1)
+            keyboard.press('j')
+            sleep(3)
+            keyboard.release('j')
+            sleep(1)
+            keyboard.press('j')
+            sleep(3)
+            keyboard.release('j')
+            sleep(1)
+            keyboard.press_and_release('j')
+            sleep(1)
+            keyboard.press_and_release('j')
+            sleep(1)
+            keyboard.press_and_release('j')
+            sleep(1)
+            keyboard.press_and_release('j')
+            sleep(1)
+            keyboard.press_and_release('j')
+            sleep(1)
+        elif choice == 25 and noannoy == 0:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            pyautogui.typewrite('NT Guys!!! Keep it up :)')
+            sleep(1)
+            keyboard.press_and_release('enter')
+        elif choice == 26: 
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('s')
+            sleep(6)
+            keyboard.release('s')
+            sleep(1)
+            keyboard.press_and_release('e')
+            sleep(2)
+            keyboard.press_and_release('j')
+        elif choice == 27: 
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('s')
+            sleep(6)
+            keyboard.release('s')
+            sleep(1)
+            keyboard.press_and_release('e')
+            sleep(2)
+            keyboard.press_and_release('j')
+        elif choice == 28: 
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('s')
+            sleep(6)
+            keyboard.release('s')
+            sleep(1)
+            keyboard.press_and_release('e')
+            sleep(2)
+            keyboard.press_and_release('j')
+        elif choice == 29: 
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('s')
+            sleep(3)
+            keyboard.release('s')
+            sleep(1)
+            keyboard.press_and_release('e')
+            sleep(2)
+            keyboard.press_and_release('j')
+        elif choice == 30: 
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('s')
+            sleep(3)
+            keyboard.release('s')
+            sleep(1)
+            keyboard.press_and_release('e')
+            sleep(2)
+            keyboard.press_and_release('j')
+        elif choice == 32:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press('s')
+            sleep(1)
+            keyboard.release('s')
+            sleep(1)
+            keyboard.press_and_release('e')
+            sleep(2)
+            keyboard.press_and_release('j')
+        elif choice == 33 and noannoy == 0:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            pyautogui.typewrite('im smurf btw')
+            sleep(1)
+            keyboard.press_and_release('enter')
+        elif choice == 34 and noannoy == 0:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            pyautogui.typewrite('If you want a boost add me')
+            sleep(1)
+            keyboard.press_and_release('enter')
+        elif choice == 35 and noannoy == 0:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            pyautogui.typewrite('ew')
+            sleep(1)
+            keyboard.press_and_release('enter')
+            sleep(3)
+            keyboard.press_and_release('enter')
+            sleep(1)
+            pyautogui.typewrite('aimlabs.com is free btw')
+            sleep(1)
+            keyboard.press_and_release('enter')
+        elif choice == 36:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            pyautogui.moveTo(res1x, res1y)
+            sleep(1)
+            pyautogui.click()
+        elif choice == 37:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            pyautogui.moveTo(res1x, res1y)
+            sleep(1)
+            pyautogui.click()
+        elif choice == 38:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            for _ in range(30):
+                keyboard.press_and_release('2')
+                sleep(0.1)
+                keyboard.press_and_release('3')
+                sleep(0.1)
+        elif choice == 39:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            for _ in range(4):
+                keyboard.press_and_release('.')
+                sleep(0.5)
+                keyboard.press_and_release('1')
+                sleep(0.5)
+                keyboard.press_and_release('1')
+                sleep(1)
+        elif choice >= 40:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            pyautogui.moveTo(res2x, res2y)
+            sleep(0.3)
+            pyautogui.click()
+            sleep(0.3)
+            pyautogui.moveTo(res3x, res3y)
+            sleep(0.5)
+            pyautogui.click()
+            sleep(0.5)
+            pyautogui.moveTo(1, 1)
+            sleep(0.5)
+            pyautogui.click()
+            
+    #end of while loop
+# end of afk function 
+
+# ******** Main Function ********** # 
+# calling main function
+if __name__ == "__main__":
+    main()
