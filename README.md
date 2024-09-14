@@ -1,34 +1,23 @@
 # ValorantAfkBot
 Simple Python bot that automatically queues for ranked, locks an agent and avoids afk detection.
 
-Features:
-Queuing into ranked automatically.
-Automatically locking Agents.
-Running around and placing the turret to avoid AFK detection.
-Optionally annoying teammates in the chat.
+Features:<br />
+Queuing into ranked automatically.<br />
+Automatically locking Agents.<br />
+Running around and placing the turret to avoid AFK detection.<br />
+Optionally annoying teammates in the chat.<br />
 
-Install:
-Download Python
-Download bot.py
-In terminal type "pip install pyautogui"
-In terminal type "pip install keyboard"
-In terminal navigate to the folder where bot.py was placed.
-In terminal type "python bot.py"
+Install:<br />
+Download Python<br />
+Download bot.py<br />
+In terminal type "pip install pyautogui"<br />
+In terminal type "pip install keyboard"<br />
+In terminal navigate to the folder where bot.py was placed.<br />
+In terminal type "python bot.py"<br />
 
-Keybinds needed:
-+------------------+---------+------------+
-|      Action      | Keybind | Importance |
-+------------------+---------+------------+
-| Ability 3        | E       | needed     |
-| Fire             | J       | needed     |
-| Ultimate         | N       | optional   |
-| Alternate fire   | K       | optional   |
-| Primary weapon   | 1       | optional   |
-| Secondary Weapon | 2       | optional   |
-| Melee weapon     | 3       | optional   |
-| Inspect          | C       | optional   |
-| Spray            | Y       | optional   |
-+------------------+---------+------------+
+Keybinds needed:<br />
+Ability 3, Keybind: E<br />
+Fire, Keybind: J<br />
 
-Disclaimer:
-Use this tool on your own risk. I dont think you'll get banned but i cant guarantee anything.
+Disclaimer:<br />
+Use this tool on your own risk. I dont think you'll get banned but i cant guarantee anything.<br />
