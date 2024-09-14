@@ -40,8 +40,6 @@ keybinds = """
 
 """
 
-queue=1
-
 explain = """
 Example:
 +---------+--------+-----------+---------+
@@ -164,10 +162,12 @@ res3x = math.ceil(0.4886719 * resx)
 res3y = math.ceil(0.6979167 * resy)
 
 def main():
-    
+    global noannoy
+    global queue
+    queue=1
     print('\nHold the q-key for 3 sec to stop the program')
-    print("Hold the q-key for 3 sec to toggle the chat function")
-    print("Hold the q-key for 3 sec to disabl queuing again")
+    print("Hold the u-key for 3 sec to toggle the chat function")
+    print("Hold the i-key for 3 sec to disable queuing again")
     print('Starting bot in 5 sec ')
     print()
     sleep(5)
@@ -230,8 +230,9 @@ def chat_afk():
     
 
 def no_afk():
-    # print('hello world')
     sleep(0.5)
+    global noannoy
+    global queue
     while bot_flag == True:
         choice = random.randint(1,70) # 1 to 10
         sleeptime = random.randint(2,10)
