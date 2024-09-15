@@ -377,7 +377,7 @@ def no_afk():
             keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press_and_release('e')
-            sleep(1)
+            sleep(2)
             keyboard.press_and_release('j')
         elif choice == 16 and noannoy == 0: 
             keyboard.press_and_release('f5')
