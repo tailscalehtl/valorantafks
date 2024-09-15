@@ -153,9 +153,10 @@ elif slotx == 4:
     resslotx=0.19921875
 
 
-    
-res1x = math.ceil(0.4863281 * resx)
-res1y = math.ceil(0.9027777 * resy)
+res0x = math.ceil(0.5 * resx)
+res0y = 2
+res1x = math.ceil(0.559765625 * resx)
+res1y = math.ceil(0.880555555556 * resy)
 res2x = math.ceil(resslotx * resx)
 res2y = math.ceil(ressloty * resy)
 res3x = math.ceil(0.4886719 * resx)
@@ -165,9 +166,9 @@ def main():
     global noannoy
     global queue
     queue=1
-    print('\nHold the q-key for 3 sec to stop the program')
-    print("Hold the u-key for 3 sec to toggle the chat function")
-    print("Hold the i-key for 3 sec to disable queuing again")
+    print('\nHold the q-key to stop the program')
+    print("Hold the u-key to toggle the chat function")
+    print("Hold the i-key to disable queuing again")
     print('Starting bot in 5 sec ')
     print()
     sleep(5)
@@ -184,7 +185,7 @@ def main():
         # starting thread  or  calling no_afk in parallel
         t1.start()
         while bot_flag == True:
-            sleep(3)
+            sleep(0.5)
             if keyboard.is_pressed('q'):
                 bot_flag = False
                 return
@@ -199,7 +200,7 @@ def main():
                 if queue == 1:
                     queue = 0
                     print("Queueing again has been disabled!")
-                    print("Hold the i-key for 3 seconds to reenable")
+                    print("Hold the i-key to reenable")
                 else:
                     queue = 1
                     print("Queueing again has been reenabled")
@@ -732,6 +733,10 @@ def no_afk():
             keyboard.press_and_release('f5')
             sleep(1)
             if queue == 1:
+                pyautogui.moveTo(res0x, res0y)
+                sleep(1)
+                pyautogui.click()
+                sleep(1)
                 pyautogui.moveTo(res1x, res1y)
                 sleep(1)
                 pyautogui.click()
