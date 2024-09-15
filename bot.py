@@ -235,7 +235,7 @@ def no_afk():
     global noannoy
     global queue
     while bot_flag == True:
-        choice = random.randint(1,70) # 1 to 10
+        choice = random.randint(1,75) # 1 to 10
         sleeptime = random.randint(2,10)
         
         #sed lyf no switch case :(
@@ -725,34 +725,12 @@ def no_afk():
         elif choice == 36:
             keyboard.press_and_release('f5')
             sleep(1)
-            if queue == 1:
-                pyautogui.moveTo(res0x, res0y)
-                sleep(1)
-                pyautogui.click()
-                sleep(1)
-                pyautogui.moveTo(res1x, res1y)
-                sleep(1)
-                pyautogui.click()
-        elif choice == 37:
-            keyboard.press_and_release('f5')
-            sleep(1)
-            if queue == 1:
-                pyautogui.moveTo(res0x, res0y)
-                sleep(1)
-                pyautogui.click()
-                sleep(1)
-                pyautogui.moveTo(res1x, res1y)
-                sleep(1)
-                pyautogui.click()
-        elif choice == 38:
-            keyboard.press_and_release('f5')
-            sleep(1)
             for _ in range(30):
                 keyboard.press_and_release('2')
                 sleep(0.1)
                 keyboard.press_and_release('3')
                 sleep(0.1)
-        elif choice == 39:
+        elif choice == 37:
             keyboard.press_and_release('f5')
             sleep(1)
             for _ in range(4):
@@ -762,7 +740,18 @@ def no_afk():
                 sleep(0.5)
                 keyboard.press_and_release('1')
                 sleep(1)
-        elif choice >= 40:
+        elif choice <= 45:
+            keyboard.press_and_release('f5')
+            sleep(1)
+            if queue == 1:
+                pyautogui.moveTo(res0x, res0y)
+                sleep(1)
+                pyautogui.click()
+                sleep(1)
+                pyautogui.moveTo(res1x, res1y)
+                sleep(1)
+                pyautogui.click()
+        elif choice >= 46:
             keyboard.press_and_release('f5')
             sleep(1)
             pyautogui.moveTo(res2x, res2y)
