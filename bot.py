@@ -726,6 +726,10 @@ def no_afk():
             keyboard.press_and_release('f5')
             sleep(1)
             if queue == 1:
+                pyautogui.moveTo(res0x, res0y)
+                sleep(1)
+                pyautogui.click()
+                sleep(1)
                 pyautogui.moveTo(res1x, res1y)
                 sleep(1)
                 pyautogui.click()
