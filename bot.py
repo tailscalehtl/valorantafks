@@ -5,9 +5,27 @@ import random
 import pyautogui 
 import threading
 import math
+import re
+from screeninfo import get_monitors
 
-resx=2560
-resy=1440
+import re
+from screeninfo import get_monitors  # Assuming you're using the screeninfo package
+
+def get_primary_monitor_resolution():
+    for monitor in get_monitors():
+        monitor_str = str(monitor)
+        if "is_primary=True" in monitor_str:
+            res = re.search(r'width=(\d+), height=(\d+)', monitor_str)
+            if res:
+                resx = int(res.group(1))
+                resy = int(res.group(2))
+                return resx, resy
+    return None
+
+primary_res = get_primary_monitor_resolution()
+
+if primary_res:
+    resx, resy = primary_res
 
 pyautogui.FAILSAFE = False
 
@@ -18,7 +36,7 @@ art_text = """
  /  /_\  \ |    __) |      <    ______ |    |  _/ /   |   \|    |   
 /    |    \|     \  |    |  \  /_____/ |    |   \/    |    \    |   
 \____|__  /\___  /  |____|__ \         |______  /\_______  /____|   
-        \/     \/           \/                \/         \/             V1.2
+        \/     \/           \/                \/         \/             V1.3
 
 Use this tool on your own risk. I dont think you'll get banned but i cant guarantee anything.
 """
@@ -70,7 +88,7 @@ except ValueError:
     exit()
 print()
 
-print(f"Screen resolution is set to {resx}x{resy}")
+print(f"Detected screen resolution {resx}x{resy}")
 print("[INFO] Stretched maybe wont work as expected!")
 setres = input("Is this resolution correct? (Y/n): ").strip().lower()
 
@@ -161,6 +179,10 @@ res2x = math.ceil(resslotx * resx)
 res2y = math.ceil(ressloty * resy)
 res3x = math.ceil(0.4886719 * resx)
 res3y = math.ceil(0.6979167 * resy)
+res4x = math.ceil(0.5114754 * resx)
+res4y = math.ceil(0.7666667 * resy)
+res5x = math.ceil(0.6368627 * resx)
+res5y = math.ceil(0.225 * resy)
 
 def main():
     global noannoy
@@ -235,48 +257,54 @@ def no_afk():
     global noannoy
     global queue
     while bot_flag == True:
-        choice = random.randint(1,75) # 1 to 10
-        sleeptime = random.randint(2,10)
+        choice = random.randint(1,80) # 1 to 10
+        sleeptime = random.randint(1,2)
         
         #sed lyf no switch case :(
         # W
         if choice == 1:
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('w')
             sleep(sleeptime)
             keyboard.release('w')
         # A
         elif choice == 2:
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('a')
             sleep(sleeptime)
             keyboard.release('a')
         # S
         elif choice == 3:
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('s')
             sleep(sleeptime)
             keyboard.release('s')
         # D
         elif choice == 4:
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('d')
             sleep(sleeptime)
             keyboard.release('d')
         # jump
         elif choice == 5:
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('space')
             sleep(sleeptime)
             keyboard.release('space')
         # crouch
         elif choice == 6:
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('control')
             sleep(sleeptime)
@@ -288,7 +316,7 @@ def no_afk():
 
         # lets have some fun 
         # lOL    
-        elif choice == 7 and noannoy == 0: #lol
+        elif choice == 7 and noannoy == 0:
             keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press_and_release('enter')
@@ -319,14 +347,16 @@ def no_afk():
             sleep(sleeptime)
         # buy
         elif choice == 10: 
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             for _ in range(30):
                 keyboard.press_and_release('c')
                 sleep(0.1)
         
         elif choice == 11: 
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press_and_release('y')
             
@@ -374,7 +404,8 @@ def no_afk():
             keyboard.press_and_release('enter')
 
         elif choice == 15: 
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press_and_release('e')
             sleep(2)
@@ -408,7 +439,8 @@ def no_afk():
                 sleep(1)
                 keyboard.press_and_release('k')
         elif choice == 18:
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('s')
             sleep(1)
@@ -430,7 +462,8 @@ def no_afk():
             sleep(1)
             keyboard.release('s')
         elif choice == 19:
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('w')
             sleep(1)
@@ -462,7 +495,8 @@ def no_afk():
             sleep(1)
             keyboard.release('w')
         elif choice == 20:
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('w')
             sleep(1)
@@ -494,7 +528,8 @@ def no_afk():
             sleep(1)
             keyboard.release('a')
         elif choice == 21:
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('w')
             sleep(1)
@@ -526,7 +561,8 @@ def no_afk():
             sleep(1)
             keyboard.release('d')
         elif choice == 22:
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('w')
             sleep(1)
@@ -633,7 +669,8 @@ def no_afk():
             sleep(1)
             keyboard.press_and_release('enter')
         elif choice == 26: 
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('s')
             sleep(6)
@@ -643,7 +680,8 @@ def no_afk():
             sleep(2)
             keyboard.press_and_release('j')
         elif choice == 27: 
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('s')
             sleep(6)
@@ -653,7 +691,8 @@ def no_afk():
             sleep(2)
             keyboard.press_and_release('j')
         elif choice == 28: 
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('s')
             sleep(6)
@@ -663,7 +702,8 @@ def no_afk():
             sleep(2)
             keyboard.press_and_release('j')
         elif choice == 29: 
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('s')
             sleep(3)
@@ -673,7 +713,8 @@ def no_afk():
             sleep(2)
             keyboard.press_and_release('j')
         elif choice == 30: 
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('s')
             sleep(3)
@@ -683,7 +724,8 @@ def no_afk():
             sleep(2)
             keyboard.press_and_release('j')
         elif choice == 32:
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             keyboard.press('s')
             sleep(1)
@@ -723,7 +765,8 @@ def no_afk():
             sleep(1)
             keyboard.press_and_release('enter')
         elif choice == 36:
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             for _ in range(30):
                 keyboard.press_and_release('2')
@@ -731,7 +774,8 @@ def no_afk():
                 keyboard.press_and_release('3')
                 sleep(0.1)
         elif choice == 37:
-            keyboard.press_and_release('f5')
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             for _ in range(4):
                 keyboard.press_and_release('.')
@@ -740,8 +784,23 @@ def no_afk():
                 sleep(0.5)
                 keyboard.press_and_release('1')
                 sleep(1)
-        elif choice <= 45:
-            keyboard.press_and_release('f5')
+        elif choice == 38 or choice == 39:
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
+            sleep(1)
+            pyautogui.moveTo(res4x, res4y)
+            sleep(0.3)
+            pyautogui.click()
+        elif choice == 40 or choice == 41:
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
+            sleep(1)
+            pyautogui.moveTo(res5x, res5y)
+            sleep(0.3)
+            pyautogui.click()
+        elif choice <= 47:
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             if queue == 1:
                 pyautogui.moveTo(res0x, res0y)
@@ -751,8 +810,9 @@ def no_afk():
                 pyautogui.moveTo(res1x, res1y)
                 sleep(1)
                 pyautogui.click()
-        elif choice >= 46:
-            keyboard.press_and_release('f5')
+        elif choice >= 48:
+            if noannoy == 0:
+                keyboard.press_and_release('f5')
             sleep(1)
             pyautogui.moveTo(res2x, res2y)
             sleep(0.3)
