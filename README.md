@@ -13,6 +13,7 @@ Download Python<br />
 Download bot.py<br />
 In terminal type "pip install pyautogui"<br />
 In terminal type "pip install keyboard"<br />
+In terminal type "pip install screeninfo"<br />
 In terminal navigate to the folder where bot.py was placed.<br />
 In terminal type "python bot.py"<br />
 Select gamemode in Valorant before starting the bot.<br />
